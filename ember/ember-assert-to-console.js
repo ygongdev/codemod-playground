@@ -1,6 +1,6 @@
 // jscodeshift can take a parser, like "babel", "babylon", "flow", "ts", or "tsx"
 // Read more: https://github.com/facebook/jscodeshift#parser
-export const parser = "flow";
+export const parser = "tsx";
 
 export default function transformer(file, api) {
   const j = api.jscodeshift;
@@ -15,7 +15,7 @@ export default function transformer(file, api) {
       if (path.node.expression.type === "CallExpression" && path.node.expression.callee.name === "assert") {
         const [message, condition] = path.node.expression.arguments;
         const ifStatement = j.ifStatement(
-          condition,
+          j.unaryExpression('!', condition),
           j.blockStatement([
             j.expressionStatement(
               j.callExpression(

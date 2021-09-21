@@ -2,7 +2,6 @@
 // Read more: https://github.com/facebook/jscodeshift#parser
 export const parser = "flow";
 
-// Press ctrl+space for code completion
 export default function transformer(file, api) {
   const j = api.jscodeshift;
 
@@ -22,7 +21,7 @@ export default function transformer(file, api) {
               j.callExpression(
                 j.memberExpression(
                   j.identifier('console'),
-                  j.identifier('warn')
+                  j.identifier('error')
                 ),
                 [message]
               )
